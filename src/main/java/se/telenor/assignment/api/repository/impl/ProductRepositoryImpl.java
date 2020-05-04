@@ -24,14 +24,16 @@ public class ProductRepositoryImpl{
         return (List<Product>) productRepository.findAll();
     }
 
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
-    }
+//    public Product saveProduct(Product product) {
+//        return productRepository.save(product);
+//    }
 
     public List<Product> findByCriteria(ProductModel productModel){
 
         return productRepository.findAll((Specification<Product>) (root, query, criteriaBuilder) -> {
+
             List<Predicate> predicates = new ArrayList<>();
+
             if(productModel.getType()!=null) {
                 predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get(TYPE), productModel.getType())));
             }

@@ -25,11 +25,9 @@ public class DataLoadService {
 
     public List<Product> loadCSVToDB() {
         List<Product> productList = new ArrayList<>();
-        try {
-            BufferedReader subFileBufferedReader =
-                    new BufferedReader(
-                            new InputStreamReader(DataLoadRestController.class.getResourceAsStream(DATA_CSV_PATH)));
 
+        try {
+            BufferedReader subFileBufferedReader = new BufferedReader(new InputStreamReader(DataLoadRestController.class.getResourceAsStream(DATA_CSV_PATH)));
             String[] subFileColumnNames = subFileBufferedReader.readLine().split(FILE_DELIMITER);
 
             String line;

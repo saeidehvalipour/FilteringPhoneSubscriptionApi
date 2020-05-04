@@ -12,7 +12,7 @@ import se.telenor.assignment.api.service.DataLoadService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/load")
+@RequestMapping("/loadData")
 public class DataLoadRestController {
 
     @Autowired
@@ -24,6 +24,4 @@ public class DataLoadRestController {
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
-
 }
-

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import se.telenor.assignment.api.model.Product;
 import se.telenor.assignment.api.model.ProductModel;
+import se.telenor.assignment.api.repository.ProductRepository;
 import se.telenor.assignment.api.repository.impl.ProductRepositoryImpl;
 
 import java.util.List;
@@ -15,6 +16,13 @@ public class ProductService {
 
     @Autowired
     private ProductRepositoryImpl productRepositoryImpl;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    public void deleteAllProducts() {
+        productRepository.deleteAll();
+    }
 
     public List<Product> getAllProducts(ProductModel productModel) {
 
@@ -39,7 +47,7 @@ public class ProductService {
                     String address = product.getAddress().concat(", ").concat(product.getCity());
                     product.setAddress(address);
                     product.setCity(null);
-                    Double gbLimit = (Objects.isNull(product.getGbLimit()) || product.getGbLimit()==0) ? null : product.getGbLimit();
+                    Double gbLimit = (Objects.isNull(product.getGbLimit()) || product.getGbLimit()==0) ? 0.0 : product.getGbLimit();
                     if (Objects.nonNull(gbLimit))
                         product.setGbLimit(gbLimit);
                     else

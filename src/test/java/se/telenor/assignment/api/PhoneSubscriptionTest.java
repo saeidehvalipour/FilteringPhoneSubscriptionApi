@@ -1,8 +1,6 @@
 package se.telenor.assignment.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +12,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
-import se.telenor.assignment.api.Application;
 import se.telenor.assignment.api.model.Product;
 import se.telenor.assignment.api.model.ProductModel;
 import se.telenor.assignment.api.service.DataLoadService;
@@ -22,7 +19,6 @@ import se.telenor.assignment.api.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -36,6 +32,9 @@ public class PhoneSubscriptionTest {
     @Autowired
     private DataLoadService dataLoadService;
 
+    @Autowired
+    private ProductService productService;
+
     @LocalServerPort
     private int port;
 
@@ -48,8 +47,9 @@ public class PhoneSubscriptionTest {
     }
 
     @Before
-    public void cleanUpDb(){
-        addSomeProducts();
+    public void cleanAndAddDb(){
+        productService.deleteAllProducts();
+        addProducts();
     }
 
     @Test
@@ -64,14 +64,13 @@ public class PhoneSubscriptionTest {
         newValue = newValue.substring(0, newValue.length() - 1);
         System.out.println("newValue : "+newValue);
 
-        Gson g = new Gson();
-        Product[] p = g.fromJson(newValue, Product[].class);
+        Product[] products = new Gson().fromJson(newValue, Product[].class);
 
-        System.out.println("Product string----- :: "+p[0].toString());
+        System.out.println("Product string----- :: "+products[0].toString());
 
         Assert.assertNotNull(response.getBody());
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
-        Assert.assertEquals(p.length,  productList.size());
+        Assert.assertEquals(products.length,  productList.size());
     }
 
     @Test
@@ -87,14 +86,14 @@ public class PhoneSubscriptionTest {
     }
 
 
-    public void addSomeProducts(){
+    public void addProducts(){
         productList = new ArrayList<>();
-        productList.add(new Product(null, "phone", "green", null, 250.50, "Kungsgatan", "Stockholm"));
-        productList.add(new Product(null, "phone", "blue", null, 300.00, "Kungsgatan", "Stockholm"));
-        productList.add(new Product(null, "phone", "white", null, 300.00, "Kungsgatan", "Stockholm"));
-        productList.add(new Product(null, "subscription", null, 10.0, 100.50, "Gamlastan", "Gothenburg"));
-        productList.add(new Product(null, "subscription", null, 20.0, 50.50, "Gamlastan", "Linköping"));
-        productList.add(new Product(null, "subscription", null, 100.0, 100.50, "Gamlastan", "Stockholm"));
+        productList.add(new Product(null, "phone", "grön", null, 277.0, "Blake gränden", "Karlskrona"));
+        productList.add(new Product(null, "phone", "guld", null, 45.0, "Gustafsson gärdet", "Malmö"));
+        productList.add(new Product(null, "phone", "brun", null, 952.0, "Olsson allén", "Malmö"));
+        productList.add(new Product(null, "subscription", null, 10.0, 334.0, "Candido gränden", "Malmö"));
+        productList.add(new Product(null, "subscription", null, 10.0, 650.0, "Persson gärdet", "Karlskrona"));
+        productList.add(new Product(null, "subscription", null, 50.0, 774.0, "Nilsson gatan", "Stockholm"));
         dataLoadService.saveProducts(productList);
     }
 
