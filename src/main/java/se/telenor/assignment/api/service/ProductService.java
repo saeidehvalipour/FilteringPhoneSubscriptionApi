@@ -24,6 +24,14 @@ public class ProductService {
         productRepository.deleteAll();
     }
 
+    public List<Product> getAllProducts() {
+        return (List<Product>) productRepository.findAll();
+    }
+
+    public Product getProductById(final Long id) {
+        return productRepository.findById(id).get();
+    }
+
     public List<Product> getAllProducts(ProductModel productModel) {
 
         List<Product> productList;
@@ -55,4 +63,3 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 }
-
