@@ -47,13 +47,9 @@ public class ProductService {
                     String address = product.getAddress().concat(", ").concat(product.getCity());
                     product.setAddress(address);
                     product.setCity(null);
-                    Double gbLimit = (Objects.isNull(product.getGbLimit()) || product.getGbLimit()==0) ? 0.0 : product.getGbLimit();
-                    if (Objects.nonNull(gbLimit))
-                        product.setGbLimit(gbLimit);
-                    else
-                        product.setGbLimit(null);
-                    String color = (Objects.isNull(product.getColor()) || product.getColor().length() == 0)? null: product.getColor();
-                    product.setColor(color);
+                    Double gbLimit = (Objects.isNull(product.getGbLimit())) ? null : product.getGbLimit();
+                    if (Objects.nonNull(gbLimit)) product.setGbLimit(gbLimit);
+                    else product.setGbLimit(null);
                     return product;
                 })
                 .collect(Collectors.toList());

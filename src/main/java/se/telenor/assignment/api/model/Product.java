@@ -3,11 +3,13 @@ package se.telenor.assignment.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -17,6 +19,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
+    @JsonIgnore
     private String color;
     private Double gbLimit;
     private Double price;
@@ -28,6 +31,7 @@ public class Product {
     public Product(Long id, String type, String color, Double gbLimit, Double price, String address, String city) {
         this.id = id;
         this.type = type;
+
         this.color = color;
         this.gbLimit = gbLimit;
         this.price = price;
@@ -50,10 +54,9 @@ public class Product {
     }
 
     public void setColor(String color) {
-        this.color = color;
+          this.color = color;
     }
 
-    @JsonIgnore
     public void setGbLimit(Double gbLimit) {
         this.gbLimit = gbLimit;
     }
@@ -65,7 +68,12 @@ public class Product {
 
     @JsonProperty(value = "properties")
     public String getProperties() {
-        return "gb_limit:" + this.gbLimit;
+        if (StringUtils.isEmpty(this.color))
+            return "gb_limit:" + this.gbLimit;
+        else if ("phone".equals(this.type)){
+            return "color:" + this.color;
+        }
+            return "";
     }
 
     public void setPrice(Double price) {
