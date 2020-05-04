@@ -32,7 +32,6 @@ public class DataLoadService {
 
             String[] subFileColumnNames = subFileBufferedReader.readLine().split(FILE_DELIMITER);
 
-            Arrays.stream(subFileColumnNames).forEach(s -> System.out.println("Value :: " + s));
             String line;
             while (Objects.nonNull((line = subFileBufferedReader.readLine()))) {
                 String[] lineArray = line.split(FILE_DELIMITER, -1);
@@ -44,7 +43,6 @@ public class DataLoadService {
                 product.setAddress(getStoreAddress(lineArray));
                 product.setCity(getStoreCity(lineArray));
 
-                System.out.println("product : " + product);
                 Product product1 = saveProduct(product);
                 productList.add(product1);
             }

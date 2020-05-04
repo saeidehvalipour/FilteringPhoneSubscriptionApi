@@ -24,7 +24,7 @@ public class ProductRestController {
 
     @GetMapping()
     public ResponseEntity<List<Product>> getAllProducts(@ModelAttribute("productRequestModel") Optional<ProductModel> productRequestModel) {
-        System.out.println("productRequestModel: " + productRequestModel.get());
+
         List<Product> productList = new ArrayList<Product>();
         if (productRequestModel.isPresent()) {
             ProductModel productModel = productRequestModel.get();

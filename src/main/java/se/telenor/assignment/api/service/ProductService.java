@@ -17,7 +17,7 @@ public class ProductService {
     private ProductRepositoryImpl productRepositoryImpl;
 
     public List<Product> getAllProducts(ProductModel productModel) {
-        System.out.println("ProductModel: " + productModel);
+
         List<Product> productList;
         if (Objects.nonNull(productModel)) {
             productList = findByCriteria(productModel);

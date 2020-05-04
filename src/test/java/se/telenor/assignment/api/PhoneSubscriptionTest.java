@@ -66,7 +66,7 @@ public class PhoneSubscriptionTest {
 
         Gson g = new Gson();
         Product[] p = g.fromJson(newValue, Product[].class);
-        System.out.println("Product length----- :: "+p.length);
+
         System.out.println("Product string----- :: "+p[0].toString());
 
         Assert.assertNotNull(response.getBody());
